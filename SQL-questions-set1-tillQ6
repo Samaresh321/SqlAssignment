@@ -19,6 +19,9 @@ insert into CITY values(3982, 'Coral Springs', 'USA', 'Florida', 117549);
 insert into CITY values(4054, 'Fairfield', 'USA', 'California' ,92256);
 insert into CITY values(4058, 'Boulder', 'USA', 'Colorado', 91238);
 insert into CITY values(061, 'Fall River', 'USA', 'Massachusetts', 90555);
+
+insert into CITY values(5894, 'TOKIYO', 'JPN', 'abc', 58566);
+
 select * from CITY;
 
 Query Soln: select * from CITY where POPULATION >100000 and COUNTRYCODE ='USA';
@@ -32,3 +35,42 @@ Sol'n: select NAME from CITY where POPULATION >120000 and COUNTRYCODE ='USA';
 ## The CITY table is described as follows:
 
 Sol'n: select * from CITY;
+
+## Q4. Query all columns for a city in CITY with the ID 1661.
+
+Sol'n: select * from CITY where ID=1661;
+
+## Q5. Query all attributes of every Japanese city in the CITY table. The COUNTRYCODE for Japan is JPN
+
+Sol'n: select * from CITY where COUNTRYCODE='JPN';
+
+## Q6. Query the names of all the Japanese cities in the CITY table. The COUNTRYCODE for Japan is JPN.
+
+Sol'n: select NAME from CITY where COUNTRYCODE='JPN';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
