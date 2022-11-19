@@ -87,6 +87,15 @@ Query :
 select distinct CITY from STATION 
 where city Not like 'a%' and city Not like 'e%' and city Not like 'i%' and
       city Not like 'o%' and city not like 'u%';
+ 
+ 
+ ## Q14. Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+
+Query: 
+select distinct CITY from STATION 
+where CITY Not like '%a' and CITY Not like '%e' and CITY Not like '%i' and
+      CITY Not like '%o' and CITY not like '%u';
+
       
       
       
