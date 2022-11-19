@@ -1,0 +1,24 @@
+## Query1: . Query all columns for all American cities in the CITY table with populations larger than 100000.
+## The CountryCode for America is USA.
+
+create table CITY(
+    ID int,
+    NAME varchar(17),
+    COUNTRYCODE varchar(3),
+    DISTRICT varchar(20),
+    POPULATION int
+
+) ;
+
+insert into CITY values(6, 'Rotterdam', 'NLD', 'Zuid-Holland', 593321);
+insert into CITY values(3878 ,'Scottsdale', 'USA', 'Arizona', 202705);
+insert into CITY values(3965, 'Corona', 'USA', 'California', 124966);
+insert into CITY values(3973, 'Concord', 'USA', 'California', 121780);
+insert into CITY values(3977, 'Cedar Rapids', 'USA', 'Iowa', 120758);
+insert into CITY values(3982, 'Coral Springs', 'USA', 'Florida', 117549);
+insert into CITY values(4054, 'Fairfield', 'USA', 'California' ,92256);
+insert into CITY values(4058, 'Boulder', 'USA', 'Colorado', 91238);
+insert into CITY values(061, 'Fall River', 'USA', 'Massachusetts', 90555);
+select * from CITY;
+
+Query Soln: select * from CITY where POPULATION >100000 and COUNTRYCODE ='USA';
