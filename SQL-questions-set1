@@ -64,6 +64,18 @@ Query : SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[AEOIU]';
 
 ( REGEXP operator is not case sensitive , ^ is Beginning of string , [] is Any character listed between the square brackets )
  
+ 
+ ## Q12. Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+
+Query :
+SELECT DISTINCT(CITY) FROM STATION WHERE CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' 
+OR CITY LIKE '%u';    
+Or
+
+Query: 
+SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '[AEOIU]$';
+
+(where $ is end of a string)
 
 
 
