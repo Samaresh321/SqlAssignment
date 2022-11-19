@@ -42,6 +42,29 @@ Sol'n: select DISTINCT CITY from STATION where MOD(ID,2)=0 order by CITY;
 Sol'n: select count( CITY)-count(DISTINCT CITY) AS Diff_City_DisCity from STATION;
 
 
+## Q10. Query the two cities in STATION with the shortest and longest CITY names, as well as their  respective lengths (i.e.: number of characters in the name). 
+If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+
+Query1: To find largest city and its length
+
+select CITY,LENGTH(CITY) from STATION order by LENGTH(CITY) desc, CITY limit 1; 
+
+Query 2: To find smallest city and its length
+
+select CITY,LENGTH(CITY) from STATION order by LENGTH(CITY) asc, CITY limit 1; 
+
+##Q11. Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+
+Query : SELECT DISTINCT(CITY) FROM STATION WHERE CITY LIKE 'a%' OR CITY LIKE 'e%' OR CITY LIKE 'i%' OR CITY LIKE 'o%' 
+OR CITY LIKE 'u%';    
+
+OR 
+
+Query : SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[AEOIU]';
+
+( REGEXP operator is not case sensitive , ^ is Beginning of string , [] is Any character listed between the square brackets )
+ 
+
 
 
 
