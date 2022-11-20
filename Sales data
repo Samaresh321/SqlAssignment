@@ -83,7 +83,30 @@ insert into Delivery values (1, 1, '2019-08-01', '2019-08-02'),
 
 select * from Delivery;
 
+Q 20.
 
+Q21.  Write an SQL query to find the team size of each of the employees.
+Return result table in any order.
+
+Query :
+
+create table Employee(
+employee_id int,
+ team_id int,
+ Primary key(employee_id)
+);
+
+insert into  Employee values(1, 8),
+(2, 8),
+(3, 8),
+(4, 7),
+(5 ,9),
+(6 ,9);
+
+select * from Employee;
+
+SELECT employee_id, COUNT(team_id) OVER (PARTITION BY team_id) as team_size
+FROM Employee;
                                  
                                  
                                  
