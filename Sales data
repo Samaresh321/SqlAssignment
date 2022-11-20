@@ -28,7 +28,19 @@ insert into Sales values(3, 3, 4, '2019-05-13', 2, 2800);
 
 select * from Sales;
 
-select product_id,
-       product_name,
-from   Product 
-where product_id not in(select product_id from Sales where sale_date not Between '2019-01-01' and '2019-03-31') ;
+Query :
+
+SELECT product_id, 
+       product_name 
+FROM   Product 
+WHERE  product_id NOT IN (SELECT product_id 
+                          FROM   Sales 
+                          WHERE  sale_date NOT BETWEEN 
+                                 '2019-01-01' AND '2019-03-31'); 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
