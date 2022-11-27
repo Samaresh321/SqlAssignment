@@ -229,9 +229,39 @@ insert into products values
 (3,'LC-Phone',2,10,10),
 (4,'LC-T-Shirt',4,10,20);
 
-
 SELECT name,SUM(units*Width*LENGTH*Height) FROM warehouse w
 INNER JOIN products p ON w.product_id = p.product_id GROUP BY name;
+
+
+Q42. Write an SQL query to report the difference between the number of apples and oranges sold each day.
+Return the result table ordered by sale_date.
+
+create table Sales
+(
+    sale_date date,
+    fruit varchar(20),
+    sold_num INT,
+   PRIMARY KEY(sale_date, fruit) 
+);
+
+
+insert into Sales VALUES
+('2020-05-01','apples',10),
+('2020-05-01','oranges',8),
+('2020-05-02','apples',15),
+('2020-05-02','oranges',15),
+('2020-05-03','apples',20),
+('2020-05-03','oranges',0),
+('2020-05-04','apples',15),
+('2020-05-04','oranges',16);
+
+SELECT * FROM Sales;
+
+select a.sale_date, a.sold_num - b.sold_num
+from Sales a left join Sales b
+on a.sale_date = b.sale_date
+where a.fruit = 'apples' and b.fruit = 'oranges'
+
 
 
 
