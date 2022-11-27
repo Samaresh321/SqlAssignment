@@ -152,7 +152,43 @@ where person1 < person2
 group by person1, person2
 
 
-Q40.
+Q40. Write an SQL query to find the average selling price for each product. average_price should be
+rounded to 2 decimal places.Return the result table in any order.
+
+create table Prices
+(product_id int, 
+start_date date, 
+end_date date,
+price  int,
+PRIMARY KEY(product_id, start_date, end_date)
+);
+
+insert into Prices values
+(1,'2019-02-17','2019-02-28',5),
+(1,'2019-03-01','2019-03-22',20),
+(2,'2019-02-01','2019-02-20',15),
+(2,'2019-02-21','2019-03-31',30);
+
+SELECT * from Prices;
+
+create table UnitsSold
+(product_id int,purchase_date date,units int);
+
+insert into UnitsSold values
+(1,'2019-02-25',100),
+(1,'2019-03-01',15),
+(2,'2019-02-10',200),
+(2,'2019-03-22',30);
+
+SELECT * from UnitsSold;
+
+SELECT p.product_id, round(sum(p.price * u.units)/sum(u.units),2) as average_price
+FROM Prices p 
+JOIN UnitsSold u ON p.product_id=u.product_id and (u.purchase_date between p.start_date and p.end_date)
+group by p.product_id;
+
+
+
 
 
 
