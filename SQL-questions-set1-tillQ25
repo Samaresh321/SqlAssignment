@@ -83,7 +83,46 @@ insert into Delivery values (1, 1, '2019-08-01', '2019-08-02'),
 
 select * from Delivery;
 
-Q 20.
+
+select round(100*d2.immediate_orders/count(d1.delivery_id),2)
+immediate_percentage
+from Delivery d1,
+    (select count(order_date) as immediate_orders
+    from Delivery 
+    where order_date = customer_pref_delivery_date) d2
+    group by d2.immediate_orders;
+
+
+Q 20.Write an SQL query to find the ctr of each Ad. Round ctr to two decimal points.
+Return the result table ordered by ctr in descending order and by ad_id in ascending order in case of a
+tie.
+
+create table Ads(ad_id int, user_id int,action  varchar(20));
+
+insert into Ads values
+(1,1 ,'Clicked'),
+(2,2 ,'Clicked'),
+(3,3 ,'Viewed'),
+(5,5 ,'Ignored'),
+(1,7 ,'Ignored'),
+(2,7 ,'Viewed'),
+(3,5 ,'Clicked'),
+(1,4 ,'Viewed'),
+(2,11,'Viewed'),
+(1,2 ,'Clicked');
+
+SELECT * from Ads;
+
+select ad_id,
+    (case when clicks+views = 0 then 0 else round(clicks/(clicks+views)*100, 2) end) as ctr
+from 
+    (select ad_id,
+        sum(case when action='Clicked' then 1 else 0 end) as clicks,
+        sum(case when action='Viewed' then 1 else 0 end) as views
+    from Ads
+    group by ad_id) as t
+order by ctr desc, ad_id asc
+
 
 Q21.  Write an SQL query to find the team size of each of the employees.
 Return result table in any order.
