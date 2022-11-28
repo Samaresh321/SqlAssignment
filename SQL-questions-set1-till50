@@ -532,7 +532,67 @@ SELECT
 FROM cte
 WHERE rnk=1;
 
-Q50. Write an SQL query to find the winner in each group.Return the result table in any order
+Q50. Write an SQL query to find the winner in each group.Return the result table in any order.
+
+create table Players
+(player_id   int,
+group_id   int);
+
+insert into Players values  
+(15,1),
+(25,1),
+(30,1),
+(45,1),
+(10,2),
+(35,2),
+(50,2),
+(20,3),
+(40,3);
+
+create table Matches
+(match_id      int,
+first_player  int,
+second_player int, 
+first_score   int,
+second_score  int);
+
+insert into Matches values
+(1,15,45,3,0),
+(2,30,25,1,2),
+(3,30,15,2,0),
+(4,40,20,5,2),
+(5,35,50,1,1);
+
+SELECT * from Matches;
+SELECT * from Players;
+
+
+select group_id,player_id from(
+ select *,dense_rank() over (partition by group_id order by
+ winningscore desc) rnk
+ from Players p join 
+ (select 
+case when
+first_score> second_score then first_player
+when second_score>first_score then second_player
+else 
+ CASE
+   when first_player<second_player then first_player
+   when second_player<first_player then second_player
+   end 
+end as winner,
+case when 
+first_score> second_score then first_score
+when  second_score>first_score then second_score
+else
+  CASE 
+   when first_player<second_player then first_player
+   when second_player<first_player then second_player
+   end 
+end as winningscore
+ from Matches) w on p.player_id = w.winner
+ order by player_id)a where a.rnk =1;
+
 
     
 
