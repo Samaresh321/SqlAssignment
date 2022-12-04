@@ -89,7 +89,54 @@ SELECT employee_id , COUNT(team_id) over (partition by team_id ) as team_size
 FROM Employee
 ORDER BY employee_id;
 
+Q 55.A telecommunications company wants to invest in new countries. 
+The company intends to invest in the countries where the average call duration of the calls in this country is strictly greater than the global average call duration.
+Write an SQL query to ﬁnd the countries where this company can invest. Return the result table in any order.
+
+create table Person(
+id int,name varchar(20),phone_number varchar(20));
+
+insert into Person values
+(3 ,'Jonathan','051-1234567'),
+(12,' Elvis','051-7654321'),
+(1 ,'Moncef','212-1234567'),
+(2 ,'Maroua','212-6523651'),
+(7 ,'Meir','972-1234567'),
+(9 ,'Rachel','972-0011100');
+
+create table Country(
+name varchar(20),country_code int);
+
+insert into Country values
+('Peru', 51),
+('Israel', 972),
+('Morocco', 212),
+('Germany', 49),
+('Ethiopia', 251);
+
+create table Calls
+(caller_id int,
+callee_id int,duration int);
+
+insert into Calls values
+(1,9,33),
+(2,9,4),
+(1,2,59),
+(3,12,102),
+(3,12,330),
+(12,3,5),
+(7,9,13),
+(7,1,3),
+(9,7,1),
+(1,7,7);
 
 
-
+SELECT c.name FROM
+Person p 
+LEFT JOIN Country c
+ON LEFT (p.phone_number,3)=c.country_code
+LEFT JOIN Calls ca 
+ON p.id IN (ca.caller_id,ca.callee_id)
+GROUP BY c.name
+HAVING AVG(ca.duration)>(SELECT AVG(duration) FROM Calls );
 
