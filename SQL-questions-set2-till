@@ -140,3 +140,44 @@ ON p.id IN (ca.caller_id,ca.callee_id)
 GROUP BY c.name
 HAVING AVG(ca.duration)>(SELECT AVG(duration) FROM Calls );
 
+Q 56.Write an SQL query to report the device that is ﬁrst logged in for each player. Return the result table in any order.
+
+create  table Activity
+(player_id int, device_id int, event_date date, games_played int);
+
+insert into Activity values
+(1,2,'2016-03-01',5),
+(1,2,'2016-05-02',6),
+(2,3,'2017-06-25',1),
+(3,1,'2016-03-02',0),
+(3,4,'2018-07-03',5);
+
+
+select player_id,device_id  
+from(
+select player_id,device_id,event_date,
+row_number() over(partition by player_id order by event_date asc) as rw 
+from Activity) a
+where a.rw = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
