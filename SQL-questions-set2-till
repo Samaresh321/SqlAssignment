@@ -160,6 +160,48 @@ row_number() over(partition by player_id order by event_date asc) as rw
 from Activity) a
 where a.rw = 1;
 
+57. -Write an SQL query to ﬁnd the customer_number for the customer who has placed the largest number of orders.
+
+create table Orders(
+order_number int, customer_number int);
+
+insert into Orders values
+(1,1),
+(2,2),
+(3,3),
+(4,3);
+
+SELECT * from Orders ;
+
+WIth cte AS(SELECT customer_number, COUNT(*)
+from Orders 
+GROUP BY customer_number
+ORDER BY COUNT(*) DESC LIMIT 1)
+
+SELECT customer_number From cte ;
+
+SELECT a.customer_number 
+FROM (select customer_number, COUNT(*)
+from Orders 
+GROUP BY customer_number
+ORDER BY COUNT(*) DESC LIMIT 1) a;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
