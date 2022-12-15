@@ -1,0 +1,12 @@
+Q61. Write an SQL query to report the shortest distance between any two points from the Point table. 
+
+create table point(x int);
+
+insert into point values (-1),(0),(2);
+
+SELECT * from point;
+
+SELECT MIN(ABS(p1.x-p2.x)) as Shortest_Path
+FROM point p1
+CROSS JOIN point p2
+WHERE p1.x <> p2.x ;
