@@ -203,8 +203,24 @@ ORDER BY visited_on ;
 Q68. Write an SQL query to find the total score for each gender on each day.
      Return the result table ordered by gender and day in ascending order.
 
+create table Scores
+(player_name varchar(20),gender varchar(2),day date,score_points int);
 
+insert into Scores  values
+('Aron','F','20-01-01',17),
+('Alice','F','20-01-07',23),
+('Bajrang','M','20-01-07',7),
+('Khali','M','19-12-25',11),
+('Slaman','M','19-12-30',13),
+('Joe','M','19-12-31',3),
+('Jose','M','19-12-18',2),
+('Priya','F','19-12-31',23),
+('Priyanka','F','19-12-30',17);
 
+SELECT gender,day,SUM(score_points)  OVER(partition by gender order by day 
+rows between unbounded preceding and current row) as total
+FROM Scores 
+ORDER BY gender,day asc;
 
 
 
