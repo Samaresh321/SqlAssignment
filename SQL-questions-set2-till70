@@ -222,6 +222,21 @@ rows between unbounded preceding and current row) as total
 FROM Scores 
 ORDER BY gender,day asc;
 
+Q69.Write an SQL query to find the start and end number of continuous ranges in the table Logs.
+    Return the result table ordered by start_id.
+
+create table Logs
+(log_id  int);
+
+insert into Logs  values
+(1),(2),(3),(7),(8),(10);
+
+WIth cte AS(select log_id, log_id-ROW_NUMBER() over(ORDER BY log_id) as Diff 
+FROM Logs)
+
+SELECT min(log_id) as start_date, max(log_id) as end_date 
+FROM cte 
+GROUP BY Diff;
 
 
 
