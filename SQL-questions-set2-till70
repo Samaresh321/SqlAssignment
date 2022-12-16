@@ -167,8 +167,38 @@ Q67. Write an SQL query to compute the moving average of how much the customer p
      window (i.e., current day + 6 days before). average_amount should be rounded to two decimal places.
      Return result table ordered by visited_on in ascending order.
 
+create table Customer
+(customer_id int, name varchar(20),visited_on date,amount int);
+
+insert into Customer  values
+(1,'Jhon','2019-01-01',100),
+(2,'Daniel','2019-01-02',110),
+(3,'Jade','2019-01-03',120),
+(4,'Khaled','2019-01-04',130),
+(5,'Winston','2019-01-05',110),
+(6,'Elvis','2019-01-06',140),
+(7,'Anna','2019-01-07',150),
+(8,'Maria','2019-01-08',80),
+(9,'Jaze','2019-01-09',110),
+(1,'Jhon','2019-01-10',130),
+(3,'Jade','2019-01-10',150);
+
+Select * from Customer;
 
 
+WITH cte AS (Select visited_on, SUM(amount) As total_amount
+From Customer
+GROUP BY visited_on),
+
+cte2 AS(SELECT visited_on ,
+SUM(total_amount) over(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING and current row) as price,
+ROUND(AVG(total_amount) over(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING and current row),2) as average_amount
+FROM cte)
+
+SELECT *
+FROM cte2
+WHERE visited_on >= (SELECT visited_on from cte2 order by visited_on limit 1) + 6
+ORDER BY visited_on ;
 
 
 
