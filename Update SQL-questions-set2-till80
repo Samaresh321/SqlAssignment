@@ -22,7 +22,42 @@ Select employee_id,manager_id FROM Employees WHERE manager_id in(select employee
 FROM Employees
 WHERE manager_id in (SELECT employee_id FROM Employees WHERE manager_id=1))
 and employee_id != manager_id;
-    
+  
+  
+ Q72. Write an SQL query to find for each month and country, the number of transactions and their total amount, 
+      the number of approved transactions and their total amount.
+      Return the result table in any order.
+
+
+create table Transactions(
+id int,country varchar(10),state varchar(10),amount int,trans_date date);
+
+insert into Transactions values
+(121,'US','approved',1000,'2018-12-18'),
+(122,'US','declined',2000,'2018-12-19'),
+(123,'US','approved',2000,'2019-01-01'),
+(124,'DE','approved',2000,'2019-01-07');
+
+SELECT * FROM Transactions;
+
+select left(trans_date,7),country,
+count(*) trans_count,
+sum(if(state = 'approved',1,0))  approved_count,
+sum(amount) trans_total_amount ,
+sum(if(state = 'approved',amount,0)) approved_total_amount
+from Transactions
+group by left(trans_date,7),country;
+
+
+SELECT DISTINCT LEFT(trans_date,7) as month,country,COUNT(*) over(PARTITION BY LEFT(trans_date,7),country) as trans_count ,
+sum(if(state = 'approved',1,0)) over(PARTITION BY LEFT(trans_date,7),country) as approved_count,
+sum(amount) over(PARTITION BY LEFT(trans_date,7),country) as trans_total_amount ,
+sum(if(state = 'approved',amount,0)) over(PARTITION BY LEFT(trans_date,7),country) as approved_total_amount
+From Transactions;
+
+
+
+
     
     
     
