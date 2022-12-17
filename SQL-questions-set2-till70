@@ -238,5 +238,31 @@ SELECT min(log_id) as start_date, max(log_id) as end_date
 FROM cte 
 GROUP BY Diff;
 
+Q70. Write an SQL query to find the number of times each student attended each exam.
+     Return the result table ordered by student_id and subject_name.  
+     
+
+WITH cte AS(SELECT * 
+FROM Subjects
+CROSS JOIN 
+Students ),
+
+cte2 AS(SELECT student_id ,subject_name ,count(subject_name) as count
+FROM Examinations 
+GROUP BY student_id ,subject_name)
+
+SELECT cte.student_id ,cte.subject_name,cte.student_name,IFNULL(cte2.count,0) as attended_exams
+FROM cte 
+LEFT JOIN cte2 
+ON cte.student_id=cte2.student_id
+and cte.subject_name=cte2.subject_name
+ORDER BY cte.student_id,cte.subject_name;
+     
+     
+     
+     
+     
+
+
 
 
