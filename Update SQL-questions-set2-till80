@@ -55,10 +55,51 @@ sum(amount) over(PARTITION BY LEFT(trans_date,7),country) as trans_total_amount 
 sum(if(state = 'approved',amount,0)) over(PARTITION BY LEFT(trans_date,7),country) as approved_total_amount
 From Transactions;
 
+Q73. Write an SQL query to find the average daily percentage of posts that got removed after being reported as spam, rounded to 2 decimal places.
+
+create table Actions(
+user_id int,post_id int,action_date date,action varchar(10),extra varchar(10));
+
+insert into Actions values
+(1,1,'2019-07-01','view','null'),
+(1,1,'2019-07-01','like','null'),
+(1,1,'2019-07-01','share','null'),
+(2,2,'2019-07-04','view','null'),
+(2,2,'2019-07-04','report','spam'),
+(3,4,'2019-07-04','view','null'),
+(3,4,'2019-07-04','report','spam'),
+(4,3,'2019-07-02','view','null'),
+(4,3,'2019-07-02','report','spam'),
+(5,2,'2019-07-03','view','null'),
+(5,2,'2019-07-03','report','racism'),
+(5,5,'2019-07-03','view','null'),
+(5,5,'2019-07-03','report','racism');
+
+create table Removals(
+post_id int,remove_date date);
+
+insert into Removals values
+(2,'2019-07-20'),
+(3,'2019-07-18');
+
+select Round(AVG(rmv_avg),2) as average_daily_percent from
+(
+select avg (post_id in (SELECT post_id FROM Removals) )*100 rmv_avg
+FROM (SELECT distinct post_id, action_date, extra
+FROM  Actions) act 
+WHERE extra='spam'
+GROUP BY action_date) avg_vals ;
 
 
 
-    
+WITH cte AS (select action_date , avg(post_id in (SELECT post_id FROM Removals))*100 rmv_avg
+FROM Actions 
+WHERE extra='spam'
+GROUP BY action_date)
+
+SELECT Round(AVG(rmv_avg),2) From cte;
+
+
     
     
     
