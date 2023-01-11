@@ -132,6 +132,52 @@ cte2 as (select count(distinct player_id) number_games from Activity)
 select round(count(distinct player_id)/(select number_games from cte2),2)
 fraction from cte;
 
+Q75. Write an SQL query to report the fraction of players that logged in again on the day after the day they ﬁrst logged in, rounded to 2 decimal places. 
+In other words, you need to count the number of players that logged in for at least two consecutive days starting from their ﬁrst login date, 
+then divide that number by the total number of players.
+
+create Table Activity
+(player_id     int ,
+device_id     int ,
+event_date    date,
+games_played  int);
+
+insert into Activity values
+(1,2,'2016-03-01',5), 
+(1,2,'2016-03-02',6), 
+(2,3,'2017-06-25',1), 
+(3,1,'2016-03-02',0), 
+(3,4,'2018-07-03',5); 
+
+
+with cte as(SELECT player_id,Min(event_date) As first_login
+FROM Activity 
+GROUP BY player_id),
+cte2  AS
+(SELECT DATE_ADD(first_login, INTERVAL 1 DAY) as next_date
+FROM cte)
+
+SELECT
+ROUND((Select COUNT(DISTINCT player_id) 
+FROM Activity WHERE (player_id,event_date) 
+IN (SELECT player_id,next_date FROM cte2))/(SELECT COUNT(DISTINCT player_id) FROM Activity),2) As fraction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     
