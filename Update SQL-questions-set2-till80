@@ -192,6 +192,35 @@ round(CASE
 
 
 
+Q77. Write an SQL query to evaluate the boolean expressions in Expressions table. Return the result table in any order.
+
+create table Variables
+(name varchar(2),value int);
+
+insert into Variables VALUES
+('x',66),
+('y',77);
+create table Expressions
+(left_operand varchar(2),operator enum ('<', '>', '=')
+,right_operand varchar(2));
+
+insert into Expressions VALUES
+('x', '>' ,'y'),
+('x', '<' ,'y'),
+('x', '=' ,'y'),
+('y', '>' ,'x'),
+('y', '<' ,'x'),
+('x', '=' ,'x');
+
+select left_operand,operator,right_operand,
+case
+        when e.operator = '<' then if(v1.value < v2.value,'true','false')
+        when e.operator = '>' then if(v1.value > v2.value,'true','false')
+        else if(v1.value = v2.value,'true','false')
+    end as value
+from Expressions e
+left join Variables v1 on e.left_operand = v1.name 
+left join Variables v2 on e.right_operand = v2.name ;
 
 
 
