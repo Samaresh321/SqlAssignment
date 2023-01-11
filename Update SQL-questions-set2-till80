@@ -223,8 +223,8 @@ left join Variables v1 on e.left_operand = v1.name
 left join Variables v2 on e.right_operand = v2.name ;
 
 
-
-
+Q78. A telecommunications company wants to invest in new countries. The company intends to invest in the countries where the average call duration of the calls in this country is strictly greater than the global average call duration.
+Write an SQL query to ﬁnd the countries where this company can invest. Return the result table in any order.
 
 
 
